@@ -21,6 +21,10 @@ class ConcreteSubject implements Subject {
 	 * @type {number} Для удобства в этой переменной хранится состояние
 	 * Издателя, необходимое всем подписчикам.
 	 */
+	constructor(state: number) {
+		this.state = state;
+		// Note that this.email is not set
+	}
 	public state: number;
 
 	/**
@@ -35,16 +39,19 @@ class ConcreteSubject implements Subject {
 	 */
 	public attach(observer: Observer): void {
 		const isExist = this.observers.includes(observer);
+
 		if (isExist) {
 			return console.log('Subject: Observer has been attached already.');
 		}
 
 		console.log('Subject: Attached an observer.');
+
 		this.observers.push(observer);
 	}
 
 	public detach(observer: Observer): void {
 		const observerIndex = this.observers.indexOf(observer);
+
 		if (observerIndex === -1) {
 			return console.log('Subject: Nonexistent observer.');
 		}
@@ -111,7 +118,7 @@ class ConcreteObserverB implements Observer {
 * Клиентский код.
 */
 
-const subject = new ConcreteSubject();
+const subject = new ConcreteSubject(0);
 
 const observer1 = new ConcreteObserverA();
 subject.attach(observer1);
