@@ -3,15 +3,15 @@
  */
 interface Subject {
 	// Присоединяет наблюдателя к издателю.
-	attach(observer: Observer): void;
+	subscribe(observer: Observer): void;
 
 	// Отсоединяет наблюдателя от издателя.
-	detach(observer: Observer): void;
+	unsubscribe(observer: Observer): void;
 
 	// Уведомляет всех наблюдателей о событии.
 	notify(): void;
 
-	state: number
+	state: boolean
 }
 
 /**
@@ -20,38 +20,37 @@ interface Subject {
 */
 class Button implements Subject {
 	/**
-	 * @type {number} Для удобства в этой переменной хранится состояние
+	 * @type {boolean} Для удобства в этой переменной хранится состояние
 	 * Издателя, необходимое всем подписчикам.
 	 */
-	constructor(state: number) {
+
+	constructor(state: boolean) {
 		this.state = state;
 	}
 
-	public state: number;
+	public state: boolean;
 
 	/**
-	 * @type {Observer[]} Список подписчиков. В реальной жизни список
-	 * подписчиков может храниться в более подробном виде (классифицируется по
-	 * типу события и т.д.)
+	 * @type {Observer[]} Список подписчиков.
 	 */
 	private observers: Observer[] = [];
 
 	/**
 	 * Методы управления подпиской.
 	 */
-	public attach(observer: Observer): void {
+	public subscribe(observer: Observer): void {
 		const isExist = this.observers.includes(observer);
 
 		if (isExist) {
-			return console.log('Subject: Observer has been attached already.');
+			return console.log('Subject: Observer has been subscribed already.');
 		}
 
-		console.log('Subject: Attached an observer.');
+		console.log('Subject: Subscribed an observer.');
 
 		this.observers.push(observer);
 	}
 
-	public detach(observer: Observer): void {
+	public unsubscribe(observer: Observer): void {
 		const observerIndex = this.observers.indexOf(observer);
 
 		if (observerIndex === -1) {
@@ -59,7 +58,8 @@ class Button implements Subject {
 		}
 
 		this.observers.splice(observerIndex, 1);
-		console.log('Subject: Detached an observer.');
+
+		console.log('Subject: Unsubscribed an observer.');
 	}
 
 	/**
@@ -67,6 +67,7 @@ class Button implements Subject {
 	 */
 	public notify(): void {
 		console.log('Subject: Notifying observers...');
+
 		for (const observer of this.observers) {
 			observer.update(this);
 		}
@@ -78,15 +79,17 @@ class Button implements Subject {
 	 * уведомления всякий раз, когда должно произойти что-то важное (или после
 	 * этого).
 	 */
-	public push(): void {
-		console.log('Pushed.');
-		this.state = 1;
+	public pushButton(): void {
+		console.log('Button was pushed.');
+
+		this.state = true;
 
 		setTimeout(() => {
-			this.state = 0;
+			this.state = false;
 		}, 100);
 
 		console.log(`Button: My state has just changed to: ${this.state}`);
+
 		this.notify();
 	}
 }
@@ -106,7 +109,7 @@ interface Observer {
 */
 class Gate implements Observer {
 	public update(subject: Subject): void {
-		if (subject instanceof Button && subject.state === 1) {
+		if (subject.state) {
 			console.log('Gate: Reacted to the event.');
 		}
 	}
@@ -116,12 +119,9 @@ class Gate implements Observer {
 * Клиентский код.
 */
 
-const button = new Button(0);
+const button = new Button(false);
 
 const gate = new Gate();
-button.attach(gate);
+button.subscribe(gate);
 
-button.push();
-button.push();
-
-button.push();
+button.pushButton();
