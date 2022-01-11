@@ -10,6 +10,8 @@ interface Subject {
 
 	// Уведомляет всех наблюдателей о событии.
 	notify(): void;
+
+	state: number
 }
 
 /**
