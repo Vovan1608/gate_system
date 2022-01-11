@@ -16,15 +16,15 @@ interface Subject {
 * Издатель владеет некоторым важным состоянием и оповещает наблюдателей о его
 * изменениях.
 */
-class ConcreteSubject implements Subject {
+class Button implements Subject {
 	/**
 	 * @type {number} Для удобства в этой переменной хранится состояние
 	 * Издателя, необходимое всем подписчикам.
 	 */
 	constructor(state: number) {
 		this.state = state;
-		// Note that this.email is not set
 	}
+
 	public state: number;
 
 	/**
@@ -76,11 +76,15 @@ class ConcreteSubject implements Subject {
 	 * уведомления всякий раз, когда должно произойти что-то важное (или после
 	 * этого).
 	 */
-	public someBusinessLogic(): void {
-		console.log('\nSubject: I\'m doing something important.');
-		this.state = Math.floor(Math.random() * (10 + 1));
+	public push(): void {
+		console.log('Pushed.');
+		this.state = 1;
 
-		console.log(`Subject: My state has just changed to: ${this.state}`);
+		setTimeout(() => {
+			this.state = 0;
+		}, 100);
+
+		console.log(`Button: My state has just changed to: ${this.state}`);
 		this.notify();
 	}
 }
@@ -98,18 +102,10 @@ interface Observer {
 * Конкретные Наблюдатели реагируют на обновления, выпущенные Издателем, к
 * которому они прикреплены.
 */
-class ConcreteObserverA implements Observer {
+class Gate implements Observer {
 	public update(subject: Subject): void {
-		if (subject instanceof ConcreteSubject && subject.state < 3) {
-			console.log('ConcreteObserverA: Reacted to the event.');
-		}
-	}
-}
-
-class ConcreteObserverB implements Observer {
-	public update(subject: Subject): void {
-		if (subject instanceof ConcreteSubject && (subject.state === 0 || subject.state >= 2)) {
-			console.log('ConcreteObserverB: Reacted to the event.');
+		if (subject instanceof Button && subject.state === 1) {
+			console.log('Gate: Reacted to the event.');
 		}
 	}
 }
@@ -118,17 +114,12 @@ class ConcreteObserverB implements Observer {
 * Клиентский код.
 */
 
-const subject = new ConcreteSubject(0);
+const button = new Button(0);
 
-const observer1 = new ConcreteObserverA();
-subject.attach(observer1);
+const gate = new Gate();
+button.attach(gate);
 
-const observer2 = new ConcreteObserverB();
-subject.attach(observer2);
+button.push();
+button.push();
 
-subject.someBusinessLogic();
-subject.someBusinessLogic();
-
-subject.detach(observer2);
-
-subject.someBusinessLogic();
+button.push();
