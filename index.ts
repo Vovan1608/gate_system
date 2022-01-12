@@ -86,7 +86,10 @@ class Button implements Subject {
 
 		setTimeout(() => {
 			this.state = false;
-		}, 100);
+
+			console.log(`Button: My state has just changed to: ${this.state}`);
+
+		}, 1000);
 
 		console.log(`Button: My state has just changed to: ${this.state}`);
 
@@ -101,6 +104,18 @@ class Button implements Subject {
 interface Observer {
 	// Получить обновление от субъекта.
 	update(subject: Subject): void;
+
+	open(): void;
+
+	close(): void;
+
+	stop(): void;
+
+	inProgress: boolean;
+
+	isOpen: boolean;
+
+	howManyTimeInProgress: number;
 }
 
 /**
@@ -108,20 +123,91 @@ interface Observer {
 * которому они прикреплены.
 */
 class Gate implements Observer {
-	public update(subject: Subject): void {
-		if (subject.state) {
+	static readonly fullTime = 10000;
+
+	public inProgress = false;
+	public isOpen = false;
+	public howManyTimeInProgress = 0;
+
+	static intervalId: number;
+
+	public update({ state }: Subject): void {
+		if (state) {
+			this.inProgress = true;
+
 			console.log('Gate: Reacted to the event.');
+
+			this.move(Gate.fullTime);
+		}
+
+		if (state && this.inProgress) {
+			this.stop();
 		}
 	}
-}
 
-/**
-* Клиентский код.
-*/
+	public stop() {
+		this.inProgress = false;
+
+		//TODO остановить движение
+	}
+
+	public open() {
+		console.log('Gate: I`m opening');
+
+		const delay = Gate.fullTime - this.howManyTimeInProgress;
+
+		this.move(delay);
+
+		setTimeout(() => {
+			this.inProgress = false;
+			this.isOpen = true;
+			this.howManyTimeInProgress = 0;
+
+			console.log('Gate: I`ve just opened.');
+		}, delay);
+
+	}
+
+	public close() {
+		console.log('Gate: I`m closing');
+
+		const delay = Gate.fullTime - this.howManyTimeInProgress;
+
+		this.move(delay);
+
+		setTimeout(() => {
+			this.inProgress = false;
+			this.isOpen = false;
+			this.howManyTimeInProgress = 0;
+
+			console.log('Gate: I`ve just closed.');
+		}, delay);
+	}
+
+	public move(delay: number) {
+		console.log(delay);
+		// TODO 
+		// 	Gate.intervalId = setInterval(() => {
+		// 		this.howManyInProgress += 1;
+		// 	}, 1000);
+
+		// 	setTimeout(() => {
+		// 		clearInterval(Gate.intervalId);
+		// 	}, delay);
+		// }
+	}
+
+	/**
+	* Клиентский код.
+	*/
+}
 
 const button = new Button(false);
 
 const gate = new Gate();
 button.subscribe(gate);
+button.subscribe(gate);
 
 button.pushButton();
+
+button.unsubscribe(gate);
