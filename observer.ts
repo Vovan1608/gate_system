@@ -20,7 +20,7 @@ interface User {
 	readonly age: number
 }
 
-class AppListener implements Listener {
+export default class AppListener implements Listener {
 	private state: ListenerState = { data: [], error: new Error }
 
 	private observers: Observer[] = []

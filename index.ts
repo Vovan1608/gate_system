@@ -129,7 +129,7 @@ class Gate implements Observer {
 	public isOpen = false;
 	public howManyTimeInProgress = 0;
 
-	static intervalId: number;
+	static intervalId: any;
 
 	public update({ state }: Subject): void {
 		if (state) {
@@ -187,20 +187,21 @@ class Gate implements Observer {
 	public move(delay: number) {
 		console.log(delay);
 		// TODO 
-		// 	Gate.intervalId = setInterval(() => {
-		// 		this.howManyInProgress += 1;
-		// 	}, 1000);
+		Gate.intervalId = setInterval(() => {
+			this.howManyTimeInProgress += 1;
+			this.howManyTimeInProgress === 10 && clearInterval(Gate.intervalId);
+		}, 1000);
 
-		// 	setTimeout(() => {
-		// 		clearInterval(Gate.intervalId);
-		// 	}, delay);
-		// }
+		// setTimeout(() => {
+		// 	clearInterval(Gate.intervalId);
+		// }, delay);
 	}
-
-	/**
-	* Клиентский код.
-	*/
 }
+
+/**
+* Клиентский код.
+*/
+// }
 
 const button = new Button(false);
 
@@ -209,5 +210,6 @@ button.subscribe(gate);
 button.subscribe(gate);
 
 button.pushButton();
+gate.open()
 
-button.unsubscribe(gate);
+// button.unsubscribe(gate);
