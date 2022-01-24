@@ -5,10 +5,11 @@ const garage = new Garage();
 const car = new Car();
 car.attach(garage);
 
-garage.toggleGate();
+garage.setTimer(3000);
+garage.setClosingSpeed(5);
 
-garage.setTimer(5000);
+garage.toggleGate();
 
 // setTimeout(() => garage.toggleGate(), 4000);
 // setTimeout(() => garage.toggleGate(), 5000);
-// setTimeout(() => car.carIsComing(), 9000);
+setTimeout(() => car.carIsComing(), 5000);

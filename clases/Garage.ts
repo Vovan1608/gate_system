@@ -55,18 +55,10 @@ export default class Garage implements GarageType {
 	}
 
 	private closeGate(speed: number) {
-		for (let i = this.gate.closingLevel; i < 11; i++) {
+		for (let i = this.gate.closingLevel; i <= this.gate.speedState; i++) {
 			if (!this.car.nearby) {
 				this.timeouts.push(setTimeout(() => {
 					console.log(`Full closing after ${this.gate.closingLevel++} cek`);
-
-					if (this.gate.closingLevel === 11) {
-						this.gate.closingLevel = 10;
-
-						console.log('Gate is fully closed');
-
-					}
-
 				}, speed += 1000));
 			}
 		}
@@ -97,5 +89,11 @@ export default class Garage implements GarageType {
 
 	public setTimer(value: number): void {
 		this.gate.timerState = value;
+	}
+
+	public setClosingSpeed(value: number): void {
+		this.gate.speedState = value;
+
+		this.gate.closingLevel = value;
 	}
 }

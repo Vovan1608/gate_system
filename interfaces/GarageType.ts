@@ -4,4 +4,8 @@ export default interface GarageType {
 	updateCarState(subject: boolean): void;
 
 	setTimer(value: number): void;
+
+	// setClosingLevel(value: number): void;
+
+	setClosingSpeed(value: number): void;
 }

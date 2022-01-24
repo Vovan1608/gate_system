@@ -4,6 +4,7 @@ export default class Gate implements GateType {
 	private isClosed: boolean = true;
 	private level: number = 10;
 	private timer: number = 10000;
+	private duration: number = 10;
 
 	get closingLevel(): number {
 		return this.level;
@@ -27,5 +28,13 @@ export default class Gate implements GateType {
 
 	set timerState(value: number) {
 		this.timer = value;
+	}
+
+	get speedState(): number {
+		return this.duration;
+	}
+
+	set speedState(value: number) {
+		this.duration = value;
 	}
 }
