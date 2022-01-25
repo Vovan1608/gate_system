@@ -5,7 +5,5 @@ export default interface GarageType {
 
 	setTimer(value: number): void;
 
-	// setClosingLevel(value: number): void;
-
 	setClosingSpeed(value: number): void;
 }

@@ -14,17 +14,16 @@ export default class Garage implements GarageType {
 	public toggleGate() {
 		let speed = 0;
 
-		if (this.timeouts.length) {
+		if (this.timeouts.length !== 0) {
 			this.cleanAllTimeouts();
-		} else {
+		}
 
-			if (this.gate.closed) {
-				this.openGate(speed);
-			} else {
-				this.closeGate(speed);
-			}
+		if (this.timeouts.length === 0 && this.gate.closed) {
+			this.openGate(speed);
+		}
 
-			this.gate.closed = !this.gate.closed;
+		if (this.timeouts.length === 0 && !this.gate.closed) {
+			this.closeGate(speed);
 		}
 	}
 
@@ -34,24 +33,12 @@ export default class Garage implements GarageType {
 				console.log(`Full opening after ${this.gate.closingLevel--} cek`);
 
 				if (this.gate.closingLevel === 0) {
-					this.gate.closingLevel = 1;
-
-					console.log('Gate is fully opened');
-
-					for (let i = this.gate.timerState, j = 1000; i > 0; i -= 1000) {
-						setTimeout(() => {
-							console.log(`${i / 1000} sec left to start closing`);
-						}, j += 1000);
-					}
-
-					setTimeout(() => {
-						this.cleanAllTimeouts();
-						this.toggleGate();
-					}, this.gate.timerState + 1000);
-
+					this.makeDelay();
 				}
 			}, speed += 1000));
 		}
+
+		this.toggle();
 	}
 
 	private closeGate(speed: number) {
@@ -62,6 +49,8 @@ export default class Garage implements GarageType {
 				}, speed += 1000));
 			}
 		}
+
+		this.toggle();
 	}
 
 	private cleanAllTimeouts(): void {
@@ -79,11 +68,11 @@ export default class Garage implements GarageType {
 
 		if (value) {
 			console.log(`Garage: I reacted that my car is under gate...${value}`);
+		}
 
-			if (this.gate.closingLevel) {
-				this.cleanAllTimeouts();
-				this.toggleGate();
-			}
+		if (value && this.gate.closingLevel !== 0) {
+			this.cleanAllTimeouts();
+			this.toggleGate();
 		}
 	}
 
@@ -95,5 +84,34 @@ export default class Garage implements GarageType {
 		this.gate.speedState = value;
 
 		this.gate.closingLevel = value;
+	}
+
+	private makeDelay() {
+		this.gate.closingLevel = 1;
+
+		console.log('Gate is fully opened');
+
+		this.countDown();
+
+		this.delay();
+	}
+
+	private countDown() {
+		for (let i = this.gate.timerState, j = 1000; i > 0; i -= 1) {
+			setTimeout(() => {
+				console.log(`${i} sec left to start closing`);
+			}, j += 1000);
+		}
+	}
+
+	private delay() {
+		setTimeout(() => {
+			this.cleanAllTimeouts();
+			this.toggleGate();
+		}, this.gate.timerState * 1000 + 1000);
+	}
+
+	private toggle() {
+		this.gate.closed = !this.gate.closed;
 	}
 }

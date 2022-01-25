@@ -3,7 +3,7 @@ import GateType from '../interfaces/GateType';
 export default class Gate implements GateType {
 	private isClosed: boolean = true;
 	private level: number = 10;
-	private timer: number = 10000;
+	private timer: number = 10;
 	private duration: number = 10;
 
 	get closingLevel(): number {
