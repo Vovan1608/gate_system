@@ -8,8 +8,12 @@ car.attach(garage);
 garage.setTimer(3);
 garage.setClosingSpeed(5);
 
-garage.toggleGate();
+car.carIsComing(true);
+
+setTimeout(() => car.carIsComing(false), 7000);
+// garage.toggleGate();
 
 // setTimeout(() => garage.toggleGate(), 4000);
 // setTimeout(() => garage.toggleGate(), 5000);
-setTimeout(() => car.carIsComing(), 13000);
+// setTimeout(() => car.carIsComing(), 13000);
+// setTimeout(() => car.carIsComing(), 15000);

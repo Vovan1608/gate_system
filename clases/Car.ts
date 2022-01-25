@@ -22,8 +22,8 @@ export default class Car implements CarType {
 		this.observers.map(observer => observer.updateCarState(this.isNearby));
 	}
 
-	public carIsComing(): void {
-		this.nearby = true
+	public carIsComing(value: boolean): void {
+		this.nearby = value;
 
 		console.log(`Car: I am in the zone of Gate System, so my nearby is: ${this.nearby}`);
 
