@@ -1,10 +1,11 @@
-import GateType from '../interfaces/GateType';
+import { GateType } from '../interfaces/Types';
 
 export default class Gate implements GateType {
 	private isClosed: boolean = true;
 	private level: number = 10;
 	private timer: number = 10;
 	private duration: number = 10;
+	public gatePending: boolean = false;
 
 	get closingLevel(): number {
 		return this.level;

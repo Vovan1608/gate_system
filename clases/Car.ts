@@ -1,6 +1,4 @@
-import CarType from "../interfaces/CarType";
-// import Garage from "./Garage";
-// import Notification from "./Notification";
+import { CarType } from "../interfaces/Types";
 
 export default class Car implements CarType {
 	public isNearby: boolean = false;
@@ -29,5 +27,17 @@ export default class Car implements CarType {
 		console.log(`Car: I am in the zone of Gate System, so my nearby is: ${this.nearby}`);
 
 		this.notify();
+	}
+
+	private metRecurs() {
+		if (this.isNearby) {
+			console.log('Car: Notifying to my garage...');
+
+			this.observers.map(observer => observer.updateCarState(this.isNearby));
+		} else {
+			setTimeout(() => {
+				this.metRecurs();
+			}, 1000);
+		}
 	}
 }

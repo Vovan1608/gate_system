@@ -1,23 +1,27 @@
 import Garage from './clases/Garage';
 import Car from './clases/Car';
-import Notification from "./clases/Notification";
+import RemoteControl from './clases/RemoteControl';
+import User from './clases/User';
 
-const garage = new Garage();
+const tom = new User('Tom');
+const bob = new User('Bob');
+
 const car = new Car();
-const notification = new Notification();
+const garage = new Garage(car);
+const remoteControl = new RemoteControl(garage);
+
+garage.attach(tom);
+garage.attach(bob);
 
 car.attach(garage);
-car.attach(notification);
 
-garage.setTimer(3);
-garage.setClosingSpeed(5);
+remoteControl.setTimer(3);
+remoteControl.setClosingSpeed(5);
 
-car.carIsComing(true);
-
-setTimeout(() => car.carIsComing(false), 7000);
 // garage.toggleGate();
 
-// setTimeout(() => garage.toggleGate(), 4000);
-// setTimeout(() => garage.toggleGate(), 5000);
-// setTimeout(() => car.carIsComing(), 13000);
-// setTimeout(() => car.carIsComing(), 15000);
+car.carIsComing(true)
+
+setTimeout(() => car.carIsComing(false), 5000);
+
+// setTimeout(() => car.carIsComing(false), 10000);
