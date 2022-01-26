@@ -1,9 +1,10 @@
 import CarType from "../interfaces/CarType";
-import Garage from "./Garage";
+// import Garage from "./Garage";
+// import Notification from "./Notification";
 
 export default class Car implements CarType {
 	public isNearby: boolean = false;
-	private observers: Garage[] = [];
+	private observers: any[] = [];
 
 	get nearby() {
 		return this.isNearby;
@@ -13,7 +14,7 @@ export default class Car implements CarType {
 		this.isNearby = value;
 	}
 
-	public attach(observer: Garage): void {
+	public attach(observer: any): void {
 		this.observers.push(observer);
 	}
 

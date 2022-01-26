@@ -1,9 +1,13 @@
 import Garage from './clases/Garage';
 import Car from './clases/Car';
+import Notification from "./clases/Notification";
 
 const garage = new Garage();
 const car = new Car();
+const notification = new Notification();
+
 car.attach(garage);
+car.attach(notification);
 
 garage.setTimer(3);
 garage.setClosingSpeed(5);
