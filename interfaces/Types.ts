@@ -20,4 +20,4 @@ interface GateType {
 	gatePending: boolean;
 }
 
-export { CarType, GarageType, GateType }
+export { CarType, GarageType, GateType };

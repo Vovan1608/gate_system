@@ -28,16 +28,4 @@ export default class Car implements CarType {
 
 		this.notify();
 	}
-
-	private metRecurs() {
-		if (this.isNearby) {
-			console.log('Car: Notifying to my garage...');
-
-			this.observers.map(observer => observer.updateCarState(this.isNearby));
-		} else {
-			setTimeout(() => {
-				this.metRecurs();
-			}, 1000);
-		}
-	}
 }
