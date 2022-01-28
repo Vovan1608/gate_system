@@ -1,7 +1,6 @@
 import { GarageType, GateType } from '../interfaces/Types';
 
 import Gate from '../clases/Gate';
-
 import GateController from './GateController';
 
 export default class Garage implements GarageType {

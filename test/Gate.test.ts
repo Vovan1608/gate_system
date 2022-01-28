@@ -36,4 +36,14 @@ describe('test Gate class', () => {
 
 		expect(gate.speedState).toBe(70);
 	});
+
+	it('getter closed should return boolean', () => {
+		expect(gate.closed).toBe(true);
+	});
+
+	it('setter closed should set isClosed to false', () => {
+		gate.closed = false;
+
+		expect(gate.closed).toBe(false);
+	});
 });
