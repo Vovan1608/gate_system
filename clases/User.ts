@@ -5,6 +5,6 @@ export default class User {
 	}
 
 	public notification(message: string) {
-		// console.log(`${this.name} was notified that ${message}`)
+		console.log(`${this.name} was notified that ${message}`)
 	}
 }

@@ -38,6 +38,8 @@ export default class Garage implements GarageType {
 	private notificatAllObservers(message: string) {
 		this.observers.forEach((observer) => {
 			observer.notification(message)
+			console.log('from garage: ', message);
+
 		})
 	}
 

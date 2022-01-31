@@ -12,21 +12,29 @@ describe('test Car class', () => {
 		car = new Car();
 	});
 
-	it('method attach is called', () => {
-		const spy = jest.spyOn(car, 'attach');
+	it('should set isNerby prop', () => {
+		expect(car.nearby).toBe(false);
 
-		car.attach('Bob');
+		car.nearby = true;
 
-		expect(spy).toHaveBeenCalledWith('Bob');
+		expect(car.nearby).toBe(true);
 	});
 
-	it('method notify is called', () => {
-		const spy = jest.spyOn(car, 'notify');
+	// it('method attach is called', () => {
+	// 	const spy = jest.spyOn(car, 'attach');
 
-		car.notify();
+	// 	car.attach('Bob');
 
-		expect(spy).toHaveBeenCalled();
-	});
+	// 	expect(spy).toHaveBeenCalledWith('Bob');
+	// });
+
+	// it('method notify is called', () => {
+	// 	const spy = jest.spyOn(car, 'notify');
+
+	// 	car.notify();
+
+	// 	expect(spy).toHaveBeenCalled();
+	// });
 
 	it('method observer.updateCarState is called', () => {
 		const garage = new Garage(car);
@@ -40,11 +48,16 @@ describe('test Car class', () => {
 		expect(spy).toHaveBeenCalled();
 	});
 
-	it('method notify is called in carIsComing', () => {
+
+	it('should ', () => {
 		const spyNotify = jest.spyOn(car, 'notify');
+
+		expect(car.nearby).toBe(false);
 
 		car.carIsComing(true);
 
 		expect(spyNotify).toHaveBeenCalled();
+
+		expect(car.nearby).toBe(true);
 	});
 });
