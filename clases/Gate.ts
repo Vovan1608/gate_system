@@ -7,35 +7,35 @@ export default class Gate implements GateType {
 	private duration: number = 10;
 	public gatePending: boolean = false;
 
-	get closingLevel(): number {
+	public get closingLevel(): number {
 		return this.level;
 	}
 
-	set closingLevel(value: number) {
+	public set closingLevel(value: number) {
 		this.level = value;
 	}
 
-	get closed(): boolean {
+	public get closed(): boolean {
 		return this.isClosed;
 	}
 
-	set closed(value: boolean) {
+	public set closed(value: boolean) {
 		this.isClosed = value;
 	}
 
-	get timerState(): number {
+	public get timerState(): number {
 		return this.timer;
 	}
 
-	set timerState(value: number) {
+	public set timerState(value: number) {
 		this.timer = value;
 	}
 
-	get speedState(): number {
+	public get speedState(): number {
 		return this.duration;
 	}
 
-	set speedState(value: number) {
+	public set speedState(value: number) {
 		this.duration = value;
 	}
 }

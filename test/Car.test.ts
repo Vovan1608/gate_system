@@ -1,6 +1,9 @@
 import 'jest-console';
 
 import Car from "../clases/Car";
+import Garage from "../clases/Garage";
+
+jest.mock("../clases/Garage");
 
 describe('test Car class', () => {
 	let car: Car;
@@ -25,13 +28,22 @@ describe('test Car class', () => {
 		expect(spy).toHaveBeenCalled();
 	});
 
-	it('method notify is called', () => {
-		const spyCarisComing = jest.spyOn(car, 'carIsComing');
+	it('method observer.updateCarState is called', () => {
+		const garage = new Garage(car);
+
+		const spy = jest.spyOn(garage, 'updateCarState');
+
+		car.attach(garage);
+
+		car.notify();
+
+		expect(spy).toHaveBeenCalled();
+	});
+
+	it('method notify is called in carIsComing', () => {
 		const spyNotify = jest.spyOn(car, 'notify');
 
 		car.carIsComing(true);
-
-		expect(spyCarisComing).toHaveBeenCalledWith(true);
 
 		expect(spyNotify).toHaveBeenCalled();
 	});
