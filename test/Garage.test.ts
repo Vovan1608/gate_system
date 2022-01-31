@@ -1,5 +1,6 @@
-import Garage from "../clases/Garage";
+import 'jest-console';
 
+import Garage from "../clases/Garage";
 import Gate from "../clases/Gate";
 
 jest.mock('../clases/Gate');

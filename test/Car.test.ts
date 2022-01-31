@@ -1,3 +1,5 @@
+import 'jest-console';
+
 import Car from "../clases/Car";
 
 describe('test Car class', () => {
