@@ -20,22 +20,6 @@ describe('test Car class', () => {
 		expect(car.nearby).toBe(true);
 	});
 
-	// it('method attach is called', () => {
-	// 	const spy = jest.spyOn(car, 'attach');
-
-	// 	car.attach('Bob');
-
-	// 	expect(spy).toHaveBeenCalledWith('Bob');
-	// });
-
-	// it('method notify is called', () => {
-	// 	const spy = jest.spyOn(car, 'notify');
-
-	// 	car.notify();
-
-	// 	expect(spy).toHaveBeenCalled();
-	// });
-
 	it('method observer.updateCarState is called', () => {
 		const garage = new Garage(car);
 

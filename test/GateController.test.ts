@@ -1,15 +1,16 @@
-// import GateController from "../clases/GateController";
-
-jest.mock('../clases/GateController');
-const GateController = require('../clases/GateController');
+import GateController from "../clases/GateController";
 
 describe('test GateController class', () => {
-	let gateController: typeof GateController;
+	const victim = { notification(message: string) { } };
+
+	let gateController: GateController;
 	let gate: any;
 	let car: any;
 	let observers: any[];
 
 	beforeEach(() => {
+		jest.useFakeTimers();
+
 		gate = {
 			gatePending: false,
 			closingLevel: 10,
@@ -21,34 +22,28 @@ describe('test GateController class', () => {
 			nearby: false
 		}
 
-		observers = ['user1', 'user2'];
-
-		// jest.mock('../clases/GateController');
+		observers = [victim, victim];
 
 		gateController = new GateController(gate, car, observers);
 	});
 
-	it('method "toggleGate" should call method "cleanAllTimeouts"', () => {
-		// gateController.timeouts = ['something'];
+	it('method toggleGate should call method openGate and toggle', () => {
+		jest.spyOn(global, 'setTimeout');
 
-		// const gateControllerProto = Object.getPrototypeOf(gateController);
+		gate.closed = true;
 
-		// const spy = jest.spyOn(gateController, 'cleanAllTimeouts');
-		// expect(gate.closed).toBe(false);
+		gateController.toggleGate();
 
-		// gateController.toggle();
-
-		// expect(gate.closed).toBe(true);
-
+		expect(gate.gatePending).toBe(true);
 
 		expect(gate.closed).toBe(false);
 
-		gateController.toggle();
-
-		expect(gate.closed).toBe(true);
+		expect(setTimeout).toHaveBeenCalledTimes(gate.closingLevel);
 	});
 
-	it('method "toggleGate" should call ', () => {
+	it('method toggleGate should call method closeGate and toggle', () => {
+		gateController.toggleGate();
 
+		expect(gate.closed).toBe(true);
 	});
 });
