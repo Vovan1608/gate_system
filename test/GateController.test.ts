@@ -42,8 +42,12 @@ describe('test GateController class', () => {
 	});
 
 	it('method toggleGate should call method closeGate and toggle', () => {
+		jest.spyOn(global, 'setTimeout');
+
 		gateController.toggleGate();
 
 		expect(gate.closed).toBe(true);
+
+		expect(setTimeout).toHaveBeenCalledTimes(gate.closingLevel);
 	});
 });
