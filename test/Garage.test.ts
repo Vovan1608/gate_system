@@ -13,20 +13,8 @@ describe('test Garage class', () => {
 		garage = new Garage(car);
 	});
 
-	it('method attach should be called', () => {
-		const spy = jest.spyOn(garage, 'attach');
-
-		garage.attach(observers);
-
-		expect(spy).toBeCalledWith(observers);
-	});
-
-	it('should call method notification', () => {
-		const observer = {
-			notification: (message) => {
-				console.log(message);
-			}
-		};
+	it('should notify event subscribers', () => {
+		const observer = { notification: (message) => { } };
 
 		const spy = jest.spyOn(observer, 'notification');
 

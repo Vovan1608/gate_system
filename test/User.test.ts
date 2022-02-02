@@ -4,17 +4,21 @@ describe('test User class', () => {
 	let user: User;
 
 	const name = 'Tom';
+	const message = 'test';
 
 	beforeEach(() => {
 		user = new User(name);
 	});
 
-	it('method notification should be called with message', () => {
-		const spy = jest.spyOn(user, 'notification');
-		const message = 'test';
+	it('method notification should be call console.log', () => {
+		const spy = jest.spyOn(global.console, 'log');
 
 		user.notification(message);
 
-		expect(spy).toBeCalledWith(message);
+		expect(spy).toHaveBeenCalled();
+
+		expect(spy).toHaveBeenCalledTimes(1);
+
+		expect(spy).toHaveBeenCalledWith(`${name} was notified that ${message}`);
 	});
 });

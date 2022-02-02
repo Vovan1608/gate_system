@@ -15,10 +15,6 @@ describe('test RemoteControle class', () => {
 		remouteControl = new RemoteControl(garage);
 	});
 
-	it('should return an instance of the RemoteControl', () => {
-		expect(remouteControl).toBeInstanceOf(RemoteControl);
-	});
-
 	it('method "setTimer" should set timerState to 25', () => {
 		remouteControl.setTimer(25);
 
