@@ -1,3 +1,5 @@
+import 'jest-console';
+
 import GateController from "../clases/GateController";
 
 describe('test GateController class', () => {
@@ -10,10 +12,11 @@ describe('test GateController class', () => {
 
 	beforeEach(() => {
 		jest.useFakeTimers();
+		jest.spyOn(global, 'setTimeout');
 
 		gate = {
 			gatePending: false,
-			closingLevel: 10,
+			closingLevel: 9,
 			timerState: 5,
 			closed: false
 		};
@@ -27,9 +30,7 @@ describe('test GateController class', () => {
 		gateController = new GateController(gate, car, observers);
 	});
 
-	it('method toggleGate should call method openGate and toggle', () => {
-		jest.spyOn(global, 'setTimeout');
-
+	it('method toggleGate should call method openGate, toggle and setTimeout', () => {
 		gate.closed = true;
 
 		gateController.toggleGate();
@@ -41,9 +42,7 @@ describe('test GateController class', () => {
 		expect(setTimeout).toHaveBeenCalledTimes(gate.closingLevel);
 	});
 
-	it('method toggleGate should call method closeGate and toggle', () => {
-		jest.spyOn(global, 'setTimeout');
-
+	it('method toggleGate should call method closeGate, toggle and setTimeout', () => {
 		gateController.toggleGate();
 
 		expect(gate.closed).toBe(true);
