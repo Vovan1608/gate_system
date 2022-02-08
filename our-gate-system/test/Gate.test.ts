@@ -1,4 +1,4 @@
-import Gate from "../clases/Gate";
+import Gate from "../../../clases/Gate";
 
 describe('test Gate class', () => {
 	let gate: Gate;

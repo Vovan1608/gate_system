@@ -1,3 +1,5 @@
 /node_modules
 
 /coverage/
+
+/our-gate-system/node_modules

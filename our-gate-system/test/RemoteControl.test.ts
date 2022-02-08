@@ -1,4 +1,4 @@
-import RemoteControl from "../clases/RemoteControl";
+import RemoteControl from "../../../clases/RemoteControl";
 
 describe('test RemoteControle class', () => {
 	let remouteControl: RemoteControl;
