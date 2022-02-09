@@ -1,6 +1,6 @@
 <template>
   <div class="button-container">
-    <button @click="toggleGate">Toggle</button>
+    <button @click="toggle">Toggle</button>
   </div>
 </template>
 
@@ -11,10 +11,11 @@ import Garage from "../../clases/Garage";
 import Car from "../../clases/Car";
 
 export default class ButtonView extends Vue {
-  //   car = new Car();
-  //   garage = new Garage(this.car);
-  public toggleGate(): void {
-    console.log("toggled");
+  public  car = new Car();
+  public  garage = new Garage(this.car);
+
+  public toggle(): void {
+    this.garage.toggleGate();
   }
 }
 </script>
