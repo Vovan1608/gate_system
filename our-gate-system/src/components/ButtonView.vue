@@ -1,6 +1,6 @@
 <template>
   <div class="button-container">
-    <button @click="toggle">Toggle</button>
+    <button @click="garage.toggleGate">Toggle</button>
   </div>
 </template>
 
@@ -26,5 +26,6 @@ export default class ButtonView extends Vue {
   align-items: center;
   justify-content: center;
   min-height: 50px;
+  border: 1px solid #2c3e50;
 }
 </style>
