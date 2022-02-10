@@ -1,7 +1,7 @@
 <template>
   <div class="i-phone-device-container">
     <ButtonView />
-    <div id="events-log"></div>
+    <InputView />
   </div>
 </template>
 
@@ -9,15 +9,17 @@
 import { Vue } from "vue-class-component";
 
 import ButtonView from "./ButtonView.vue";
+import InputView from "./InputView.vue";
 
 export default class IPhoneDeviceView extends Vue {
   components: {
     ButtonView: ButtonView,
+    InputView: InputView
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .i-phone-device-container {
   min-height: 150px;
 }

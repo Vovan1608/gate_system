@@ -1,6 +1,6 @@
 <template>
   <div class="button-container">
-    <button @click="garage.toggleGate">Toggle</button>
+    <button @click="toggle">Toggle</button>
   </div>
 </template>
 
