@@ -1,7 +1,7 @@
 <template>
   <div class="input-container">
     <label for="events-log">
-    Events log
+    Events log: 
 		<input id="events-log" type="text" name="events-log" />
 	</label>
   </div>
