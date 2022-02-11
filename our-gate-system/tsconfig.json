@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
