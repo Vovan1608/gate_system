@@ -53,7 +53,6 @@
 </template>
 
 <script lang="ts">
-// import { ref } from "vue";
 import { Vue } from "vue-class-component";
 
 import Garage from "../clases/Garage";
@@ -73,10 +72,11 @@ export default class App extends Vue {
   private speed = 4;
 
   private zones = [
-    { id: 1, title: "out-parking", list: 2 },
-    { id: 2, title: "pre-parking", list: 2 },
-    { id: 3, title: "parking", list: 2 },
-    { id: 4, title: "after-parking", list: 2 },
+    { id: 1, title: "out-parking" },
+    { id: 2, title: "pre-parking" },
+    { id: 3, title: "parking" },
+    { id: 4, title: "after-parking" },
+    { id: 5, title: "out-parking" },
   ];
 
   private carCoord = {
@@ -103,8 +103,8 @@ export default class App extends Vue {
   private onDrop(e: any) {
     const zone = this.zones.find((zone) => zone.id === Number(e.target.id));
 
-    this.carCoord.top = e.pageY + "px";
-    this.carCoord.left = e.pageX + "px";
+    this.carCoord.top = e.pageY - 40 + "px";
+    this.carCoord.left = e.pageX - 40 + "px";
   }
 }
 </script>
@@ -170,9 +170,9 @@ export default class App extends Vue {
       margin: 10px;
       padding: 5px;
       min-width: 150px;
-      height: 150px;
+      height: 100px;
       border: 1px solid #2c3e50;
-      line-height: 150px;
+      line-height: 100px;
     }
 
     .car {
