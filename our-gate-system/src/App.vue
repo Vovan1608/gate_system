@@ -12,100 +12,101 @@
         </div>
         <div class="button-container">
           <label>
-             Timer 
-            <input type="text" name="events-log" v-model="timer"/>
-        </label>
+            Timer
+            <input type="text" name="events-log" v-model="timer" />
+          </label>
         </div>
         <div class="button-container">
           <label>
             Speed
             <input type="text" name="events-log" v-model="speed" />
-        </label>
-        </div> 
+          </label>
+        </div>
       </div>
     </div>
-    <div class="drag-n-drop-vidget">
-      <div class="car">
-        <img src="./assets/f4f033ef-a64c-47dd-9e3c-a6678983900b.png" alt="car">
-      </div>
-      <div class="area">
-        <span>
-          Pre-parking line area
-        </span>
-      </div>
-      <div class="area">
-        <span>
-          Parking gate area
-        </span>
-      </div>
-      <div class="area">
-        <span>
-          After-parking line area
-        </span>
-      </div>
-      <!-- <span
-        @dragover="handleOnDragOver"
-        @dragleave="onDragLeave"
-        @drop="onDrop"
+    <div id="draggable-elmnt" class="drag-n-drop-vidget">
+      <div
+        id="car"
+        class="car"
+        draggable="true"
+        @dragstart="startDrag($event)"
+        :style="{ top: carCoord.top, left: carCoord.left }"
       >
-        <slot />
-      </span> -->
+        <img
+          src="./assets/f4f033ef-a64c-47dd-9e3c-a6678983900b.png"
+          alt="car"
+        />
+      </div>
+      <div
+        v-for="{ id, title } in zones"
+        :key="id"
+        class="area"
+        :id="id"
+        @drop="onDrop($event)"
+        @dragenter.prevent
+        @dragover.prevent
+      >
+        {{ title }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+// import { ref } from "vue";
 import { Vue } from "vue-class-component";
-// import { watch, ref } from 'vue';
 
-import ButtonView from "./components/ButtonView.vue";
-import InputView from "./components/InputView.vue";
+import Garage from "../clases/Garage";
+import Car from "../clases/Car";
+import RemoteControl from "../clases/RemoteControl";
+import User from "../clases/User";
 
-import Garage from '../clases/Garage';
-import Car from '../clases/Car';
-import RemoteControl from '../clases/RemoteControl';
-import User from '../clases/User';
+const tom = new User("Tom");
+const bob = new User("Bob");
 
-const tom = new User('Tom');
-const bob = new User('Bob');
-
-export default class App extends Vue{
+export default class App extends Vue {
   private car = new Car();
-  private garage = new Garage(this.car)
-  
+  private garage = new Garage(this.car);
   private remoteControl = new RemoteControl(this.garage);
 
   private timer = 3;
-  private speed = 5;
+  private speed = 4;
 
-  create() {
+  private zones = [
+    { id: 1, title: "out-parking", list: 2 },
+    { id: 2, title: "pre-parking", list: 2 },
+    { id: 3, title: "parking", list: 2 },
+    { id: 4, title: "after-parking", list: 2 },
+  ];
+
+  private carCoord = {
+    top: "250px",
+    left: "100px",
+  };
+
+  create(): void {
     this.garage.attach(tom);
     this.garage.attach(bob);
 
     this.car.attach(this.garage);
   }
-  
+
   private toggle() {
     this.garage.toggleGate();
   }
 
-  // watch(() => speed, () => {
-  //   console.log(
-  //     "Watch props.selected function called with args:",
-      
-  //   );
-  // });
+  private startDrag(e: any) {
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.effectAllowed = "move";
+  }
 
-  // @Watch("speed")
-  // private setClosingSpeed() {
-  //   this.remoteControl.setClosingSpeed(this.speed);
-  // }
+  private onDrop(e: any) {
+    const zone = this.zones.find((zone) => zone.id === Number(e.target.id));
 
-  // @watch("timer")
-  // private setTimer() {
-  //   this.remoteControl.setTimer(this.timer);
-  // }
-};
+    this.carCoord.top = e.pageY + "px";
+    this.carCoord.left = e.pageX + "px";
+  }
+}
 </script>
 
 <style lang="scss">
@@ -166,20 +167,24 @@ export default class App extends Vue{
     border: 1px solid #2c3e50;
 
     .area {
-      display: inline-block;
       margin: 10px;
       padding: 5px;
       min-width: 150px;
       height: 150px;
       border: 1px solid #2c3e50;
-      line-height: 150px; 
+      line-height: 150px;
     }
 
     .car {
       display: inline-block;
-      position: relative;
+      position: absolute;
+      top: 250px;
+      left: 100px;
       width: 80px;
       height: 80px;
+      z-index: 9;
+      text-align: center;
+      cursor: move;
 
       img {
         position: absolute;
