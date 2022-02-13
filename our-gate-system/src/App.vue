@@ -14,6 +14,7 @@
           <label>
             Timer
             <input
+              id="timer"
               type="text"
               name="events-log"
               v-model="timer"
@@ -25,6 +26,7 @@
           <label>
             Speed
             <input
+              id="speed"
               type="text"
               name="events-log"
               v-model="speed"
@@ -50,8 +52,8 @@
       <div
         v-for="{ id, title } in zones"
         :key="id"
-        class="area"
         :id="id"
+        class="area droppable"
         @drop="onDrop($event)"
         @dragenter.prevent
         @dragover.prevent
@@ -64,7 +66,7 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
-import { Component, Watch } from "vue-property-decorator";
+import { Watch } from "vue-property-decorator";
 
 import Garage from "../clases/Garage";
 import Car from "../clases/Car";
@@ -79,8 +81,8 @@ export default class App extends Vue {
   private garage = new Garage(this.car);
   private remoteControl = new RemoteControl(this.garage);
 
-  private timer = 3;
-  private speed = 4;
+  private timer = 10;
+  private speed = 10;
 
   private zones = [
     { id: 1, title: "out-parking" },
@@ -92,10 +94,8 @@ export default class App extends Vue {
 
   private carCoord = {
     top: "250px",
-    left: "100px",
+    left: "250px",
   };
-
-  private zoneId = 1;
 
   create(): void {
     this.garage.attach(tom);
@@ -114,10 +114,18 @@ export default class App extends Vue {
   }
 
   private onDrop(e: any) {
-    const zone = this.zones.find((zone) => zone.id === Number(e.target.id));
+    this.moveAt(e.pageY, e.pageX);
 
-    this.carCoord.top = e.pageY - 40 + "px";
-    this.carCoord.left = e.pageX - 40 + "px";
+    if (e.target.id === "1" || e.target.id === "5") {
+      this.car.carIsComing(false);
+    } else {
+      this.car.carIsComing(true);
+    }
+  }
+
+  private moveAt(top: any, left: any) {
+    this.carCoord.top = top - 40 + "px";
+    this.carCoord.left = left - 40 + "px";
   }
 
   @Watch("speed")
@@ -202,7 +210,7 @@ export default class App extends Vue {
       display: inline-block;
       position: absolute;
       top: 250px;
-      left: 100px;
+      left: 300px;
       width: 80px;
       height: 80px;
       z-index: 9;
