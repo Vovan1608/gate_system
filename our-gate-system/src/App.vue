@@ -13,13 +13,23 @@
         <div class="button-container">
           <label>
             Timer
-            <input type="text" name="events-log" v-model="timer" />
+            <input
+              type="text"
+              name="events-log"
+              v-model="timer"
+              @change="setTimer(timer)"
+            />
           </label>
         </div>
         <div class="button-container">
           <label>
             Speed
-            <input type="text" name="events-log" v-model="speed" />
+            <input
+              type="text"
+              name="events-log"
+              v-model="speed"
+              @change="setSpeed(speed)"
+            />
           </label>
         </div>
       </div>
@@ -54,6 +64,7 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
+import { Component, Watch } from "vue-property-decorator";
 
 import Garage from "../clases/Garage";
 import Car from "../clases/Car";
@@ -84,6 +95,8 @@ export default class App extends Vue {
     left: "100px",
   };
 
+  private zoneId = 1;
+
   create(): void {
     this.garage.attach(tom);
     this.garage.attach(bob);
@@ -105,6 +118,16 @@ export default class App extends Vue {
 
     this.carCoord.top = e.pageY - 40 + "px";
     this.carCoord.left = e.pageX - 40 + "px";
+  }
+
+  @Watch("speed")
+  setSpeed(speed: any) {
+    this.remoteControl.setClosingSpeed(speed);
+  }
+
+  @Watch("timer")
+  setTimer(timer: any) {
+    this.remoteControl.setTimer(timer);
   }
 }
 </script>
