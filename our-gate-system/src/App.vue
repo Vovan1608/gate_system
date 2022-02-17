@@ -17,6 +17,7 @@
               id="timer"
               type="text"
               name="events-log"
+              data-test="timer"
               v-model="timer"
               @change="setTimer(timer)"
             />
@@ -28,6 +29,7 @@
             <input
               id="speed"
               type="text"
+              data-test="speed"
               name="events-log"
               v-model="speed"
               @change="setSpeed(speed)"
@@ -40,6 +42,7 @@
       <div
         id="car"
         class="car"
+        data-test="car"
         draggable="true"
         @dragstart="startDrag($event)"
         :style="{ top: carCoord.top, left: carCoord.left }"
@@ -53,6 +56,7 @@
         v-for="{ id, title } in zones"
         :key="id"
         :id="id"
+        data-test="area"
         class="area droppable"
         @drop="onDrop($event)"
         @dragenter.prevent
@@ -86,10 +90,8 @@ export default class App extends Vue {
 
   private zones = [
     { id: 1, title: "out-parking" },
-    { id: 2, title: "pre-parking" },
-    { id: 3, title: "parking" },
-    { id: 4, title: "after-parking" },
-    { id: 5, title: "out-parking" },
+    { id: 2, title: "parking" },
+    { id: 3, title: "out-parking" },
   ];
 
   private carCoord = {
@@ -116,7 +118,7 @@ export default class App extends Vue {
   private onDrop(e: any) {
     this.moveAt(e.pageY, e.pageX);
 
-    if (e.target.id === "1" || e.target.id === "5") {
+    if (e.target.id === "1" || e.target.id === "3") {
       this.car.carIsComing(false);
     } else {
       this.car.carIsComing(true);
