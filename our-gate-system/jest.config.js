@@ -3,5 +3,10 @@ module.exports = {
   transform: {
     "^.+\\.vue$": "vue-jest",
   },
-  transformIgnorePatterns: ['/node_modules/(?!@babel)']
+  transformIgnorePatterns: ['/node_modules/(?!@babel)'],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{js,vue}',
+    '!src/main.js'
+  ],
 };
