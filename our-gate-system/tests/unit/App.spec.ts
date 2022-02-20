@@ -1,16 +1,28 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 
 import App from "../../src/App.vue";
+import Garage from "../../clases/Garage";
+import Car from "../../clases/Car";
+import RemoteControl from "../../clases/RemoteControl";
+import User from "../../clases/User";
+import Gate from '../../clases/Gate';
+import GateController from '../../clases/GateController';
 
 describe("App.vue", () => {
   let wrapper: any;
   const log = console.log;
 
   beforeEach(() => {
-    wrapper = mount(App);
+    wrapper = shallowMount(App);
   });
 
   describe("button 'toggle' test", () => {
+    let toggleBtnVgt: any;
+    let toggleIPhonVgt: any;
+
+    beforeEach(() => {
+      [toggleBtnVgt, toggleIPhonVgt] = wrapper.findAll('button');
+    });
 
     it("there two buttons 'toggle' in the component App", () => {
       expect(wrapper.findAll('button')).toHaveLength(2);
@@ -19,8 +31,6 @@ describe("App.vue", () => {
     it("when button 'toggle' clicks, method 'toggle' calls", async () => {
       const spy = jest.spyOn(wrapper.vm, 'toggle');
 
-      const [toggleBtnVgt, toggleIPhonVgt] = wrapper.findAll('button');
-
       await toggleBtnVgt.trigger('click');
 
       expect(spy).toHaveBeenCalled();
@@ -28,6 +38,17 @@ describe("App.vue", () => {
       await toggleIPhonVgt.trigger('click');
 
       expect(spy).toHaveBeenCalled();
+    });
+
+    it("method 'toggle' calls method 'garage.toggleGate'", async () => {
+      jest.mock("../../clases/Garage");
+
+      const garage = new Garage({});
+      const spy = jest.spyOn(garage, 'toggleGate');
+      
+      await toggleBtnVgt.trigger('click');
+      
+      // expect(spy).toHaveBeenCalled();
     });
   });
 
